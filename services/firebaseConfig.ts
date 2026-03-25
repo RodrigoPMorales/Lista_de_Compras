@@ -8,12 +8,12 @@ import { getFirestore } from "firebase/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyASDmOTmQeB8doy6uqCvGaG3jhqtgwA35Q",
-  authDomain: "lista-compras-checkpoint.firebaseapp.com",
-  projectId: "lista-compras-checkpoint",
-  storageBucket: "lista-compras-checkpoint.firebasestorage.app",
-  messagingSenderId: "213190547693",
-  appId: "1:213190547693:web:e1e42b2e9ddd9cc78914e4",
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: "",
 };
 
 // Initialize Firebase
