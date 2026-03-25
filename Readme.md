@@ -38,7 +38,7 @@ Além disso, o app conta com atualização em tempo real dos dados e funcionalid
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/
+git clone https://github.com/RodrigoPMorales/Lista_de_Compras.git
 ```
 
 2. Acesse a pasta do projeto:
