@@ -1,31 +1,38 @@
-import { useContext } from "react";
-import { View, Text, Button } from "react-native";
+import { useContext, useEffect } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 import { AuthContext } from "../../contexts/AuthContext";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Profile() {
   const { user, logout } = useContext(AuthContext);
 
-  async function handleLogout() {
-    await logout();
-    router.replace("/login");
-  }
+  useEffect(() => {
+    if (!user) {
+      router.replace("/login");
+    }
+  }, [user]);
+
+  if (!user) return null;
 
   return (
-    <SafeAreaView style={{ flex: 1, padding: 20 }}>
+    <SafeAreaView className="flex-1 justify-center items-center px-6 bg-white">
 
-      <View style={{ marginBottom: 20 }}>
-        <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-          Usuário:
+      <Ionicons name="person-outline" size={50} color="#6b7280" />
+
+      <Text className="font-bold text-gray-900 mt-1 mb-6">
+        {user.email}
+      </Text>
+
+      <TouchableOpacity
+        onPress={logout}
+        className="bg-red-500 px-6 py-3 rounded-lg active:opacity-80"
+      >
+        <Text className="text-white font-bold">
+          Sair
         </Text>
-
-        <Text style={{ fontSize: 16, marginTop: 5 }}>
-          {user?.email || "Não identificado"}
-        </Text>
-      </View>
-
-      <Button title="Sair" onPress={handleLogout} />
+      </TouchableOpacity>
 
     </SafeAreaView>
   );

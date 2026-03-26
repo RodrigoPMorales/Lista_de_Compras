@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
   View,
   Text,
@@ -9,7 +9,11 @@ import {
   Alert
 } from "react-native";
 import { AuthContext } from "../../contexts/AuthContext";
-import { subscribeNotes, deleteNote, updateNote } from "../../services/noteService";
+import {
+  subscribeNotes,
+  deleteNote,
+  updateNote
+} from "../../services/noteService";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -20,11 +24,14 @@ export default function Home() {
   const [notes, setNotes] = useState<any[]>([]);
   const [filteredNotes, setFilteredNotes] = useState<any[]>([]);
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true);
   const [ascending, setAscending] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      router.replace("/login");
+      return;
+    }
 
     const unsub = subscribeNotes(user.uid, (data: any[]) => {
       setNotes(data);
@@ -43,90 +50,78 @@ export default function Home() {
       );
     }
 
-    
-    data.sort((a, b) => {
-      if (ascending) {
-        return a.text.localeCompare(b.text);
-      } else {
-        return b.text.localeCompare(a.text);
-      }
-    });
+    data.sort((a, b) =>
+      ascending
+        ? a.text.localeCompare(b.text)
+        : b.text.localeCompare(a.text)
+    );
 
     setFilteredNotes(data);
   }, [search, notes, ascending]);
 
-  
   function confirmDelete(id: string) {
-    Alert.alert(
-      "Excluir item",
-      "Tem certeza que deseja excluir?",
-      [
-        { text: "Cancelar", style: "cancel" },
-        {
-          text: "Excluir",
-          onPress: () => deleteNote(id),
-          style: "destructive"
-        }
-      ]
-    );
+    Alert.alert("Excluir item", "Tem certeza?", [
+      { text: "Cancelar", style: "cancel" },
+      {
+        text: "Excluir",
+        style: "destructive",
+        onPress: () => deleteNote(user.uid, id)
+      }
+    ]);
+  }
+
+  async function toggleCheck(item: any) {
+    await updateNote(user.uid, item.id, {
+      checked: !item.checked
+    });
   }
 
   if (loading) {
     return (
-      <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
+      <SafeAreaView className="flex-1 justify-center items-center">
         <ActivityIndicator size="large" />
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, padding: 20 }}>
-      
-      
+    <SafeAreaView className="flex-1 bg-white px-4 pt-4">
+
       <TextInput
         placeholder="Buscar item..."
         value={search}
         onChangeText={setSearch}
-        style={{
-          borderWidth: 1,
-          borderColor: "#ccc",
-          padding: 10,
-          borderRadius: 10,
-          marginBottom: 10
-        }}
+        className="border border-gray-300 rounded-xl p-3 mb-3"
       />
 
-      
       <TouchableOpacity
         onPress={() => setAscending(!ascending)}
-        style={{ marginBottom: 10 }}
+        className="mb-3"
       >
-        <Text>
+        <Text className="text-gray-600">
           Ordenar: {ascending ? "A → Z" : "Z → A"}
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => router.push("/note")}
+        className="bg-green-500 py-3 rounded-xl mb-4"
+      >
+        <Text className="text-white text-center font-semibold">
+          + Adicionar Item
         </Text>
       </TouchableOpacity>
 
       <FlatList
         data={filteredNotes}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingBottom: 20 }}
         renderItem={({ item }) => (
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              padding: 15,
-              marginBottom: 10,
-              backgroundColor: "#eee",
-              borderRadius: 10
-            }}
-          >
+          <View className="flex-row items-center justify-between bg-gray-100 p-4 rounded-xl mb-3">
 
-            
             <TouchableOpacity
-              style={{ flexDirection: "row", gap: 10 }}
-              onPress={() =>
-                updateNote(item.id, { checked: !item.checked })
-              }
+              className="flex-row items-center flex-1"
+              onPress={() => toggleCheck(item)}
             >
               <Ionicons
                 name={item.checked ? "checkbox" : "square-outline"}
@@ -134,23 +129,22 @@ export default function Home() {
                 color={item.checked ? "green" : "gray"}
               />
 
-              <View>
+              <View className="ml-3">
                 <Text
-                  style={{
-                    textDecorationLine: item.checked ? "line-through" : "none"
-                  }}
+                  className={`${
+                    item.checked ? "line-through text-gray-400" : "text-gray-800"
+                  }`}
                 >
                   {item.text}
                 </Text>
 
-                <Text style={{ fontSize: 12 }}>Quantidade: 
+                <Text className="text-xs text-gray-500">Quantidade : 
                   {item.quantity} • {item.category}
                 </Text>
               </View>
             </TouchableOpacity>
 
-            
-            <View style={{ flexDirection: "row", gap: 10 }}>
+            <View className="flex-row gap-3 ml-2">
               <TouchableOpacity
                 onPress={() => router.push(`/note?id=${item.id}`)}
               >
@@ -165,14 +159,6 @@ export default function Home() {
           </View>
         )}
       />
-
-      
-      <TouchableOpacity onPress={() => router.push("/note")}>
-        <Text style={{ textAlign: "center", marginTop: 20 }}>
-          + Novo Item
-        </Text>
-      </TouchableOpacity>
-
     </SafeAreaView>
   );
 }

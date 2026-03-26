@@ -17,12 +17,12 @@ export default function Note() {
 
   useEffect(() => {
     async function load() {
-      if (noteId) {
-        const note: any = await getNoteById(noteId);
+      if (noteId && user?.uid) {
+        const note: any = await getNoteById(user.uid, noteId);
         if (note) {
-          setText(note.text || "");
-          setQuantity(note.quantity || "");
-          setCategory(note.category || "");
+          setText(note.text);
+          setQuantity(note.quantity);
+          setCategory(note.category);
         }
       }
     }
@@ -35,22 +35,22 @@ export default function Note() {
       return;
     }
 
-    try {
-      if (noteId) {
-        await updateNote(noteId, { text, quantity, category });
-      } else {
-        await createNote(user.uid, {
-          text,
-          quantity,
-          category,
-          checked: false
-        });
-      }
-
-      router.back();
-    } catch (error) {
-      Alert.alert("Erro", "Não foi possível salvar.");
+    if (noteId) {
+      await updateNote(user.uid, noteId, {
+        text,
+        quantity,
+        category
+      });
+    } else {
+      await createNote(user.uid, {
+        text,
+        quantity,
+        category,
+        checked: false
+      });
     }
+
+    router.back();
   }
 
   return (
@@ -58,7 +58,7 @@ export default function Note() {
       <TextInput placeholder="Produto" value={text} onChangeText={setText} />
       <TextInput placeholder="Quantidade" value={quantity} onChangeText={setQuantity} />
       <TextInput placeholder="Categoria" value={category} onChangeText={setCategory} />
-      <Button title={noteId ? "Atualizar" : "Salvar"} onPress={handleSave} />
+      <Button title="Salvar" onPress={handleSave} />
     </SafeAreaView>
   );
 }

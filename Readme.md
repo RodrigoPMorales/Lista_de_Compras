@@ -1,5 +1,9 @@
 # Lista de Compras com Autenticação
 
+## Desenvolvido por:
+# Nome: Rodrigo Paes morales rm:560209
+# Nome: Ruan Nunes Gaspar RM:559567
+
 ## Descrição do Projeto
 
 Este projeto consiste em uma aplicação mobile desenvolvida com React Native utilizando Expo, que permite ao usuário criar e gerenciar uma lista de compras de forma simples e eficiente.
@@ -88,8 +92,9 @@ npx expo start
 
 ---
 
-## Observações
+## Video do projeto e suas funcionalidades
 
-Este projeto foi desenvolvido com foco em simplicidade, organização e boas práticas, atendendo aos requisitos propostos para a atividade.
+ (https://youtu.be/IEnL8bZsmpI)
+   
 
----
+

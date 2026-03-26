@@ -2,6 +2,7 @@
   "expo": {
     "name": "lista-compras",
     "slug": "lista-compras",
+    "scheme": "lista-compras", 
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,6 +25,7 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
+      "bundler": "metro",
       "favicon": "./assets/favicon.png"
     },
     "plugins": [

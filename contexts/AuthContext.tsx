@@ -1,23 +1,19 @@
-import { createContext, useEffect, useState } from "react";
-import { auth } from "../services/firebaseConfig";
+import { createContext, useState, useEffect } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { auth } from "../services/firebaseConfig";
+import { router } from "expo-router";
 
-export const AuthContext = createContext<any>(null);
+export const AuthContext = createContext<any>({});
 
 export function AuthProvider({ children }: any) {
   const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
-      setLoading(false);
 
-      if (user) {
-        await AsyncStorage.setItem("user", JSON.stringify(user));
-      } else {
-        await AsyncStorage.removeItem("user");
+      if (!user) {
+        router.replace("/login"); 
       }
     });
 
@@ -26,10 +22,12 @@ export function AuthProvider({ children }: any) {
 
   async function logout() {
     await signOut(auth);
+    setUser(null); 
+    router.replace("/login"); 
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, logout }}>
+    <AuthContext.Provider value={{ user, logout }}>
       {children}
     </AuthContext.Provider>
   );
