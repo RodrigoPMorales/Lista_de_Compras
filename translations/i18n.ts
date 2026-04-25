@@ -35,7 +35,10 @@ const resources = {
       error: "Erro",
       invalidLogin: "Login inválido",
       registerError: "Erro ao cadastrar",
-      fillFields: "Preencha todos os campos!"
+      fillFields: "Preencha todos os campos!",
+      locationDenied: "Permissão de localização negada",
+      map: "Mapa",
+      noLocation: "Localização não disponível"
     }
   },
   en: {
@@ -69,7 +72,10 @@ const resources = {
       error: "Error",
       invalidLogin: "Invalid login",
       registerError: "Register error",
-      fillFields: "Fill in all fields!"
+      fillFields: "Fill in all fields!",
+      locationDenied: "Location permission denied",
+      map: "Map",
+      noLocation: "Location unavailable"
     }
   }
 };

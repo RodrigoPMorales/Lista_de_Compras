@@ -1,14 +1,22 @@
 import { useState, useEffect, useContext } from "react";
-import { TextInput, Button, Alert } from "react-native";
+import {
+  TextInput,
+  TouchableOpacity,
+  Text,
+  Alert,
+  View
+} from "react-native";
 import { createNote, updateNote, getNoteById } from "../services/noteService";
 import { AuthContext } from "../contexts/AuthContext";
 import { router, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
+import { getCurrentLocation } from "../services/locationService";
 
 export default function Note() {
   const { user } = useContext(AuthContext);
   const { id } = useLocalSearchParams();
+  const { t } = useTranslation();
 
   const noteId = typeof id === "string" ? id : null;
 
@@ -20,46 +28,92 @@ export default function Note() {
     async function load() {
       if (noteId && user?.uid) {
         const note: any = await getNoteById(user.uid, noteId);
+
         if (note) {
-          setText(note.text);
-          setQuantity(note.quantity);
-          setCategory(note.category);
+          setText(note.text || "");
+          setQuantity(note.quantity || "");
+          setCategory(note.category || "");
         }
       }
     }
+
     load();
-  }, [noteId]);
+  }, [noteId, user]);
 
   async function handleSave() {
     if (!text.trim() || !quantity.trim() || !category.trim()) {
-      Alert.alert("Erro", t("fillFields"));
+      Alert.alert(t("error"), t("fillFields"));
       return;
     }
 
-    if (noteId) {
-      await updateNote(user.uid, noteId, {
-        text,
-        quantity,
-        category
-      });
-    } else {
-      await createNote(user.uid, {
-        text,
-        quantity,
-        category,
-        checked: false
-      });
-    }
+    try {
+      if (noteId) {
+        await updateNote(user.uid, noteId, {
+          text,
+          quantity,
+          category
+        });
+      } else {
+        const location = await getCurrentLocation();
 
-    router.back();
+        if (!location) {
+          Alert.alert(t("error"), t("locationDenied"));
+          return;
+        }
+
+        await createNote(user.uid, {
+          text,
+          quantity,
+          category,
+          checked: false,
+          latitude: location.latitude,
+          longitude: location.longitude
+        });
+      }
+
+      router.back();
+    } catch {
+      Alert.alert(t("error"), "Não foi possível salvar");
+    }
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, padding: 20 }}>
-      <TextInput placeholder={t("product")} value={text} onChangeText={setText} />
-      <TextInput placeholder={t("quantity")} value={quantity} onChangeText={setQuantity} />
-      <TextInput placeholder={t("category")} value={category} onChangeText={setCategory} />
-      <Button title={t("save")} onPress={handleSave} />
+    <SafeAreaView className="flex-1 bg-white px-6 justify-center">
+      <Text className="text-2xl font-bold text-gray-800 text-center mb-6">
+        {noteId ? t("update") : t("addItem")}
+      </Text>
+
+      <View className="gap-4">
+        <TextInput
+          placeholder={t("product")}
+          value={text}
+          onChangeText={setText}
+          className="bg-gray-100 p-4 rounded-xl border border-gray-200"
+        />
+
+        <TextInput
+          placeholder={t("quantity")}
+          value={quantity}
+          onChangeText={setQuantity}
+          className="bg-gray-100 p-4 rounded-xl border border-gray-200"
+        />
+
+        <TextInput
+          placeholder={t("category")}
+          value={category}
+          onChangeText={setCategory}
+          className="bg-gray-100 p-4 rounded-xl border border-gray-200"
+        />
+      </View>
+
+      <TouchableOpacity
+        onPress={handleSave}
+        className="bg-blue-500 p-4 rounded-xl mt-6"
+      >
+        <Text className="text-white text-center font-bold text-lg">
+          {noteId ? t("update") : t("save")}
+        </Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }

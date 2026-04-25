@@ -148,6 +148,11 @@ export default function Home() {
             </TouchableOpacity>
 
             <View className="flex-row gap-3 ml-2">
+              
+              <TouchableOpacity onPress={() => router.push(`/map?id=${item.id}`)}>
+                <Ionicons name="map-outline" size={20} color="green" />
+              </TouchableOpacity>
+
               <TouchableOpacity
                 onPress={() => router.push(`/note?id=${item.id}`)}
               >
