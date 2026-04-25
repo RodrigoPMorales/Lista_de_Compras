@@ -2,7 +2,7 @@
   "expo": {
     "name": "lista-compras",
     "slug": "lista-compras",
-    "scheme": "lista-compras", 
+    "scheme": "lista-compras",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -29,7 +29,8 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-localization"
     ]
   }
 }

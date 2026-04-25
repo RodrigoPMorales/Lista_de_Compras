@@ -6,12 +6,12 @@ import { getFirestore } from "firebase/firestore";
 const{getReactNativePersistence} = require("firebase/auth") as any
 
 const firebaseConfig = { 
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: "",
+  apiKey: "AIzaSyASDmOTmQeB8doy6uqCvGaG3jhqtgwA35Q",
+  authDomain: "lista-compras-checkpoint.firebaseapp.com",
+  projectId: "lista-compras-checkpoint",
+  storageBucket: "lista-compras-checkpoint.firebasestorage.app",
+  messagingSenderId: "213190547693",
+  appId: "1:213190547693:web:e1e42b2e9ddd9cc78914e4",
 };
 
 // inicializa o app

@@ -17,9 +17,12 @@ import {
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
+
 
 export default function Home() {
   const { user } = useContext(AuthContext);
+  const { t } = useTranslation();
 
   const [notes, setNotes] = useState<any[]>([]);
   const [filteredNotes, setFilteredNotes] = useState<any[]>([]);
@@ -61,9 +64,9 @@ export default function Home() {
 
   function confirmDelete(id: string) {
     Alert.alert("Excluir item", "Tem certeza?", [
-      { text: "Cancelar", style: "cancel" },
+      { text: t("cancel"), style: "cancel" },
       {
-        text: "Excluir",
+        text: t("delete"),
         style: "destructive",
         onPress: () => deleteNote(user.uid, id)
       }
@@ -88,7 +91,7 @@ export default function Home() {
     <SafeAreaView className="flex-1 bg-white px-4 pt-4">
 
       <TextInput
-        placeholder="Buscar item..."
+        placeholder={t("searchItem")}
         value={search}
         onChangeText={setSearch}
         className="border border-gray-300 rounded-xl p-3 mb-3"
@@ -99,7 +102,7 @@ export default function Home() {
         className="mb-3"
       >
         <Text className="text-gray-600">
-          Ordenar: {ascending ? "A → Z" : "Z → A"}
+          {t("sort")} {ascending ? "A → Z" : "Z → A"}
         </Text>
       </TouchableOpacity>
 
@@ -108,7 +111,7 @@ export default function Home() {
         className="bg-green-500 py-3 rounded-xl mb-4"
       >
         <Text className="text-white text-center font-semibold">
-          + Adicionar Item
+          {t("addItem")}
         </Text>
       </TouchableOpacity>
 
@@ -138,7 +141,7 @@ export default function Home() {
                   {item.text}
                 </Text>
 
-                <Text className="text-xs text-gray-500">Quantidade : 
+                <Text className="text-xs text-gray-500">{t("quantity")} : 
                   {item.quantity} • {item.category}
                 </Text>
               </View>

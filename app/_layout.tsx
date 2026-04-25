@@ -2,7 +2,7 @@ import "../global.css";
 import { Stack } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { AuthProvider } from "../contexts/AuthContext";
-
+import "../translations/i18n";
 
 export default function Layout() {
   return (

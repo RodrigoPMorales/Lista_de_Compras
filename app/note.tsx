@@ -4,6 +4,7 @@ import { createNote, updateNote, getNoteById } from "../services/noteService";
 import { AuthContext } from "../contexts/AuthContext";
 import { router, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { t } from "i18next";
 
 export default function Note() {
   const { user } = useContext(AuthContext);
@@ -31,7 +32,7 @@ export default function Note() {
 
   async function handleSave() {
     if (!text.trim() || !quantity.trim() || !category.trim()) {
-      Alert.alert("Erro", "Preencha todos os campos!");
+      Alert.alert("Erro", t("fillFields"));
       return;
     }
 
@@ -55,10 +56,10 @@ export default function Note() {
 
   return (
     <SafeAreaView style={{ flex: 1, padding: 20 }}>
-      <TextInput placeholder="Produto" value={text} onChangeText={setText} />
-      <TextInput placeholder="Quantidade" value={quantity} onChangeText={setQuantity} />
-      <TextInput placeholder="Categoria" value={category} onChangeText={setCategory} />
-      <Button title="Salvar" onPress={handleSave} />
+      <TextInput placeholder={t("product")} value={text} onChangeText={setText} />
+      <TextInput placeholder={t("quantity")} value={quantity} onChangeText={setQuantity} />
+      <TextInput placeholder={t("category")} value={category} onChangeText={setCategory} />
+      <Button title={t("save")} onPress={handleSave} />
     </SafeAreaView>
   );
 }

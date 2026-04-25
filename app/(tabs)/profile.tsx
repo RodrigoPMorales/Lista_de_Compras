@@ -4,9 +4,12 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import LanguageButton from "../../components/LanguageButton";
+import { useTranslation } from "react-i18next";
 
 export default function Profile() {
   const { user, logout } = useContext(AuthContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!user) {
@@ -25,12 +28,14 @@ export default function Profile() {
         {user.email}
       </Text>
 
+      <LanguageButton />
+
       <TouchableOpacity
         onPress={logout}
         className="bg-red-500 px-6 py-3 rounded-lg active:opacity-80"
       >
         <Text className="text-white font-bold">
-          Sair
+          {t("logout")}
         </Text>
       </TouchableOpacity>
 
