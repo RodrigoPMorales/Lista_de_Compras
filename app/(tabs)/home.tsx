@@ -18,6 +18,7 @@ import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
+import { sendNotification } from "../../services/notificationService";
 
 
 export default function Home() {
@@ -63,15 +64,18 @@ export default function Home() {
   }, [search, notes, ascending]);
 
   function confirmDelete(id: string) {
-    Alert.alert("Excluir item", "Tem certeza?", [
-      { text: t("cancel"), style: "cancel" },
-      {
-        text: t("delete"),
-        style: "destructive",
-        onPress: () => deleteNote(user.uid, id)
+  Alert.alert(t("deleteConfirmTitle"), t("deleteConfirmMessage"), [
+    { text: t("cancel"), style: "cancel" },
+    {
+      text: t("delete"),
+      style: "destructive",
+      onPress: async () => {
+        await deleteNote(user.uid, id);
+        await sendNotification(t("appName"), t("itemDeleted"));
       }
-    ]);
-  }
+    }
+  ]);
+}
 
   async function toggleCheck(item: any) {
     await updateNote(user.uid, item.id, {

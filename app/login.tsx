@@ -13,6 +13,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import LanguageButton from "../components/LanguageButton";
+import {
+  requestNotificationPermission,
+  sendNotification,
+} from "../services/notificationService";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -23,6 +27,12 @@ export default function Login() {
   async function handleLogin() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      const allowed = await requestNotificationPermission();
+
+       if (allowed) {
+      await sendNotification(t("welcome"), t("welcomeMessage"));
+    }
+
       router.replace("/(tabs)/home");
     } catch {
       Alert.alert(t("error"), t("invalidLogin"));

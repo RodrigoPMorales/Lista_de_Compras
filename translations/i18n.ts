@@ -38,7 +38,12 @@ const resources = {
       fillFields: "Preencha todos os campos!",
       locationDenied: "Permissão de localização negada",
       map: "Mapa",
-      noLocation: "Localização não disponível"
+      noLocation: "Localização não disponível",
+      welcome: "Bem-vindo!",
+      welcomeMessage: "Login realizado com sucesso",
+      itemCreated: "Item criado com sucesso",
+      itemUpdated: "Item atualizado com sucesso",
+      itemDeleted: "Item excluído com sucesso"
     }
   },
   en: {
@@ -75,7 +80,12 @@ const resources = {
       fillFields: "Fill in all fields!",
       locationDenied: "Location permission denied",
       map: "Map",
-      noLocation: "Location unavailable"
+      noLocation: "Location unavailable",
+      welcome: "Welcome!",
+      welcomeMessage: "Login successful",
+      itemCreated: "Item created successfully",
+      itemUpdated: "Item updated successfully",
+      itemDeleted: "Item deleted successfully"
     }
   }
 };

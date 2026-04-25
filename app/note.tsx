@@ -12,6 +12,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { getCurrentLocation } from "../services/locationService";
+import { sendNotification } from "../services/notificationService";
 
 export default function Note() {
   const { user } = useContext(AuthContext);
@@ -53,6 +54,7 @@ export default function Note() {
           quantity,
           category
         });
+        await sendNotification(t("appName"), t("itemUpdated"));
       } else {
         const location = await getCurrentLocation();
 
@@ -69,6 +71,7 @@ export default function Note() {
           latitude: location.latitude,
           longitude: location.longitude
         });
+        await sendNotification(t("appName"), t("itemCreated"));
       }
 
       router.back();
