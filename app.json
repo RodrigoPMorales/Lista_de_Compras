@@ -22,7 +22,8 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.rodrigopmorales.listacompras"
     },
     "web": {
       "bundler": "metro",
@@ -31,6 +32,13 @@
     "plugins": [
       "expo-router",
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "21f0e128-433c-4fcf-8378-7dc35a3f9fde"
+      }
+    },
+    "owner": "rodrigopmorales"
   }
 }
