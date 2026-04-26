@@ -1,16 +1,19 @@
-# Lista de Compras com Autenticação
+# Lista de Compras Pro
 
-## Desenvolvido por:
-# Nome: Rodrigo Paes morales rm:560209
-# Nome: Ruan Nunes Gaspar RM:559567
+## Desenvolvido por
+
+Nome: Rodrigo Paes Morales – RM: 560209
+Nome: Ruan Nunes Gaspar – RM: 559567
+
+---
 
 ## Descrição do Projeto
 
-Este projeto consiste em uma aplicação mobile desenvolvida com React Native utilizando Expo, que permite ao usuário criar e gerenciar uma lista de compras de forma simples e eficiente.
+Este projeto consiste em uma aplicação mobile desenvolvida com React Native utilizando Expo, que permite ao usuário criar e gerenciar uma lista de compras de forma simples, organizada e segura.
 
-A aplicação possui sistema de autenticação, garantindo que cada usuário tenha acesso apenas aos seus próprios dados. Após realizar o login, o usuário pode adicionar, visualizar, editar e excluir itens da sua lista de compras.
+A aplicação possui sistema de autenticação, garantindo que cada usuário tenha acesso apenas aos seus próprios dados. Após realizar o login, o usuário pode adicionar, visualizar, editar e excluir itens da sua lista.
 
-Além disso, o app conta com atualização em tempo real dos dados e funcionalidades adicionais como marcação de itens como concluídos.
+Na versão atual, o projeto foi evoluído com funcionalidades adicionais como internacionalização, geolocalização, mapas e sistema de notificações, tornando a aplicação mais completa e próxima de um produto real.
 
 ---
 
@@ -19,10 +22,16 @@ Além disso, o app conta com atualização em tempo real dos dados e funcionalid
 * React Native
 * Expo
 * Expo Router
+* TypeScript
 * Firebase Authentication
 * Firebase Firestore
 * AsyncStorage
-* TypeScript
+* i18next (internacionalização)
+* react-native-maps
+* expo-location
+* expo-notifications
+* NativeWind (Tailwind no React Native)
+* EAS Build
 
 ---
 
@@ -33,7 +42,7 @@ Além disso, o app conta com atualização em tempo real dos dados e funcionalid
 * Node.js instalado
 * npm ou yarn
 * Expo CLI (via npx)
-* Aplicativo Expo Go no celular
+* Aplicativo Expo Go ou emulador Android
 
 ---
 
@@ -63,38 +72,83 @@ npm install
 npx expo start
 ```
 
-5. Abra no celular:
+5. Execute o app:
 
-* Escaneie o QR Code com o app **Expo Go**
-* Ou execute em emulador Android/iOS
+* Escaneie o QR Code com o Expo Go
+* Ou execute em um emulador Android
 
 ---
 
 ## Funcionalidades
 
+### Autenticação
+
 * Cadastro de usuário
-* Login e Logout
+* Login e logout
 * Persistência de sessão
-* Criação de itens na lista
-* Listagem de itens por usuário
+
+### Gerenciamento de Itens
+
+* Criação de itens
 * Edição de itens
 * Exclusão de itens
-* Marcar item como concluído
-* Atualização em tempo real (Firestore)
+* Marcação de item como concluído
+* Listagem de itens por usuário
+* Atualização em tempo real com Firestore
+
+### Internacionalização
+
+* Suporte a idiomas (Português e Inglês)
+* Troca dinâmica de idioma
+* Interface totalmente traduzida
+
+### Mapas e Geolocalização
+
+* Captura automática de latitude e longitude ao criar um item
+* Armazenamento das coordenadas no Firestore
+* Visualização do local do item em mapa com marcador
+
+### Notificações
+
+* Notificação de boas-vindas ao realizar login
+* Notificação ao criar, editar e excluir itens
+
+### Build do Aplicativo
+
+* Geração de APK utilizando EAS Build
+* Aplicativo instalável fora do ambiente de desenvolvimento
 
 ---
 
 ## Regras de Negócio
 
-* Cada usuário acessa apenas suas próprias listas
-* Não é possível acessar o app sem autenticação
-* Tratamento de erros básicos (login inválido, campos vazios, etc.)
+* Cada usuário acessa apenas seus próprios itens
+* O acesso ao sistema requer autenticação
+* Campos obrigatórios são validados antes do envio
+* Permissões de localização e notificações são solicitadas ao usuário
 
 ---
 
-## Video do projeto e suas funcionalidades
+## APK do Projeto
 
- (https://youtu.be/IEnL8bZsmpI)
-   
+O aplicativo pode ser instalado através do link gerado pelo EAS Build:
 
+https://expo.dev/accounts/rodrigopmorales/projects/lista-compras/builds/0cfaf2aa-b9d0-4430-8feb-d797c971062c
 
+---
+
+## Vídeo do Projeto
+
+Demonstração das funcionalidades do aplicativo:
+CP04:
+https://youtu.be/IEnL8bZsmpI
+CP05:
+https://youtu.be/zJL6jG46bF0
+
+---
+
+## Considerações Finais
+
+O projeto foi desenvolvido com foco em simplicidade, organização e boas práticas de desenvolvimento mobile.
+
+A aplicação atende aos requisitos propostos, incluindo autenticação, persistência de dados, internacionalização, geolocalização, notificações e geração de APK, tornando-se uma solução completa para gerenciamento de listas de compras.
